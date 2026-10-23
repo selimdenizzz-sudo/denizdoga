@@ -3,37 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benim Poki Tarzı Oyun Sitem</title>
+    <title>Poki Tarzı Oyun Dünyası</title>
     <style>
-        body { background-color: #1a1a2e; color: #fff; font-family: sans-serif; margin: 0; padding: 20px; text-align: center; }
-        h1 { color: #e94560; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
-        .game-card { background: #16213e; border-radius: 12px; padding: 10px; border: 2px solid #0f3460; transition: 0.3s; }
-        .game-card:hover { transform: scale(1.05); border-color: #e94560; }
-        .game-card img { width: 100%; border-radius: 8px; height: 130px; object-fit: cover; }
-        .game-card h3 { margin: 10px 0 5px 0; font-size: 16px; }
-        .play-btn { display: inline-block; background: #e94560; color: #fff; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 5px; }
+        /* Poki Tarzı Arka Plan ve Genel Renkler */
+        body { 
+            background-color: #2a2d43; 
+            color: #fff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        /* Üst Menü / Navbar */
+        header {
+            background-color: #1e2030;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        header h1 { margin: 0; font-size: 24px; color: #ff4757; font-weight: 800; letter-spacing: 1px; }
+        .nav-links a { color: #a4b0be; text-decoration: none; margin-left: 20px; font-weight: 600; transition: 0.2s; }
+        .nav-links a:hover { color: #ff4757; }
+
+        /* Banner Alanı */
+        .hero { padding: 40px 20px; text-align: center; background: linear-gradient(180deg, #1e2030 0%, #2a2d43 100%); }
+        .hero p { color: #ced6e0; font-size: 16px; max-width: 600px; margin: 10px auto 0 auto; }
+
+        /* Poki Tarzı Akıllı Oyun Izgarası */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 15px; 
+            padding: 30px; 
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
+
+        /* Poki Tarzı Oyun Kutuları */
+        .game-card { 
+            background: #353b48; 
+            border-radius: 16px; 
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            transition: all 0.25s ease;
+            position: relative;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+        
+        /* Üzerine Gelince Poki Tarzı Büyüme ve Parlama */
+        .game-card:hover { 
+            transform: translateY(-5px) scale(1.03); 
+            border-color: #ff4757;
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
+        }
+
+        /* Resimlerin Tam Oturması İçin Ayarlar */
+        .game-card img { 
+            width: 100%; 
+            height: 160px; 
+            object-fit: cover; 
+            display: block;
+        }
+
+        /* Oyun İsimleri */
+        .game-info {
+            padding: 12px;
+            text-align: center;
+            background: #2f3640;
+        }
+        .game-info h3 { margin: 0; font-size: 14px; font-weight: 700; color: #f5f6fa; }
+
+        /* Tıklama Linki */
+        .game-link { text-decoration: none; color: inherit; }
     </style>
 </head>
 <body>
 
-    <h1>🎮 ÜCRETSİZ HTML5 OYUN PORTALI 🎮</h1>
-    <p>Kodlama bilmeden hazırladığım ilk deneme oyun sitem!</p>
+    <!-- Üst Menü -->
+    <header>
+        <h1>POKI-CLONE</h1>
+        <div class="nav-links">
+            <a href="#">Aksiyon</a>
+            <a href="#">Araba</a>
+            <a href="#">Macera</a>
+            <a href="#">Bulmaca</a>
+        </div>
+    </header>
 
+    <!-- Tanıtım -->
+    <div class="hero">
+        <h2>🎮 Eğlenceye Hemen Başla!</h2>
+        <p>İndirme yapmadan, tamamen ücretsiz tarayıcı oyunlarının tadını çıkar.</p>
+    </div>
+
+    <!-- Oyun Alanı -->
     <div class="grid">
-        <!-- Oyun 1 -->
-        <div class="game-card">
-            <img src="https://unsplash.com" alt="Oyun 1">
-            <h3>Retro Arcade</h3>
-            <a href="https://github.io" target="_blank" class="play-btn">Hemen Oyna</a>
-        </div>
 
-        <!-- Oyun 2 -->
-        <div class="game-card">
-            <img src="https://unsplash.com" alt="Oyun 2">
-            <h3>Pixel Cricket</h3>
-            <a href="https://github.io" target="_blank" class="play-btn">Hemen Oyna</a>
-        </div>
+        <!-- Oyun 1: Moto X3M -->
+        <a href="https://gamedistribution.com" target="_blank" class="game-link">
+            <div class="game-card">
+                <img src="https://gamedistribution.com" alt="Moto X3M">
+                <div class="game-info">
+                    <h3>Moto X3M Party</h3>
+                </div>
+            </div>
+        </a>
+
+        <!-- Oyun 2: Subway Surfers Alternatifi -->
+        <a href="https://gamedistribution.com" target="_blank" class="game-link">
+            <div class="game-card">
+                <img src="https://gamedistribution.com" alt="Skater Rush">
+                <div class="game-info">
+                    <h3>Skater Rush</h3>
+                </div>
+            </div>
+        </a>
+
+        <!-- Oyun 3: Slither.io Benzeri Yılan Oyunu -->
+        <a href="https://gamedistribution.com" target="_blank" class="game-link">
+            <div class="game-card">
+                <img src="https://gamedistribution.com" alt="Happy Snakes">
+                <div class="game-info">
+                    <h3>Happy Snakes</h3>
+                </div>
+            </div>
+        </a>
+
+        <!-- Oyun 4: Hız Tutkunları İçin Yarış -->
+        <a href="https://gamedistribution.com" target="_blank" class="game-link">
+            <div class="game-card">
+                <img src="https://gamedistribution.com" alt="Cyber Cars Racing">
+                <div class="game-info">
+                    <h3>Cyber Punk Racing</h3>
+                </div>
+            </div>
+        </a>
+
     </div>
 
 </body>

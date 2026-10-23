@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benim Poki Tarzı Oyun Sitem</title>
+    <style>
+        body { background-color: #1a1a2e; color: #fff; font-family: sans-serif; margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #e94560; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
+        .game-card { background: #16213e; border-radius: 12px; padding: 10px; border: 2px solid #0f3460; transition: 0.3s; }
+        .game-card:hover { transform: scale(1.05); border-color: #e94560; }
+        .game-card img { width: 100%; border-radius: 8px; height: 130px; object-fit: cover; }
+        .game-card h3 { margin: 10px 0 5px 0; font-size: 16px; }
+        .play-btn { display: inline-block; background: #e94560; color: #fff; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>🎮 ÜCRETSİZ HTML5 OYUN PORTALI 🎮</h1>
+    <p>Kodlama bilmeden hazırladığım ilk deneme oyun sitem!</p>
+
+    <div class="grid">
+        <!-- Oyun 1 -->
+        <div class="game-card">
+            <img src="https://unsplash.com" alt="Oyun 1">
+            <h3>Retro Arcade</h3>
+            <a href="https://github.io" target="_blank" class="play-btn">Hemen Oyna</a>
+        </div>
+
+        <!-- Oyun 2 -->
+        <div class="game-card">
+            <img src="https://unsplash.com" alt="Oyun 2">
+            <h3>Pixel Cricket</h3>
+            <a href="https://github.io" target="_blank" class="play-btn">Hemen Oyna</a>
+        </div>
+    </div>
+
+</body>
+</html>

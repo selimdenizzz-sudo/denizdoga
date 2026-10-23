@@ -3,251 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poki Tarzı Oyun Dünyası</title>
+    <title>Selim'in Gelişmiş Oyun Dünyası</title>
     <style>
-        /* Poki Tarzı Arka Plan ve Genel Renkler */
+        /* --- Akıllı Renk Değişkenleri (Karanlık/Aydınlık Mod İçin) --- */
+        :root {
+            --bg-color: #2a2d43;
+            --header-bg: #1e2030;
+            --text-color: #fff;
+            --card-bg: #353b48;
+            --card-text: #f5f6fa;
+            --accent-color: #ff4757;
+            --hero-bg: linear-gradient(180deg, #1e2030 0%, #2a2d43 100%);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f2f6;
+            --header-bg: #ffffff;
+            --text-color: #2f3542;
+            --card-bg: #ffffff;
+            --card-text: #2f3542;
+            --accent-color: #ff4757;
+            --hero-bg: linear-gradient(180deg, #ffffff 0%, #f1f2f6 100%);
+        }
+
         body { 
-            background-color: #2a2d43; 
-            color: #fff; 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             margin: 0; 
             padding: 0; 
+            transition: background 0.3s, color 0.3s;
         }
-        
-        /* Üst Menü / Navbar */
+
+        /* --- Modern Navbar --- */
         header {
-            background-color: #1e2030;
+            background-color: var(--header-bg);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        header h1 { margin: 0; font-size: 24px; color: #ff4757; font-weight: 800; letter-spacing: 1px; }
-        .nav-links a { color: #a4b0be; text-decoration: none; margin-left: 20px; font-weight: 600; transition: 0.2s; }
-        .nav-links a:hover { color: #ff4757; }
+        header h1 { margin: 0; font-size: 22px; color: var(--accent-color); font-weight: 800; }
+        
+        /* Arama Motoru Kutusu */
+        .search-container { position: relative; width: 40%; max-width: 400px; }
+        .search-container input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 25px;
+            border: 2px solid #ccc;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+        }
 
-        /* Banner Alanı */
-        .hero { padding: 40px 20px; text-align: center; background: linear-gradient(180deg, #1e2030 0%, #2a2d43 100%); }
-        .hero p { color: #ced6e0; font-size: 16px; max-width: 600px; margin: 10px auto 0 auto; }
+        /* Tema ve Kontrol Butonları */
+        .controls { display: flex; gap: 10px; align-items: center; }
+        .btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .btn:hover { opacity: 0.9; transform: scale(1.05); }
 
-        /* Poki Tarzı Akıllı Oyun Izgarası */
+        .hero { padding: 25px 20px; text-align: center; background: var(--hero-bg); }
+        .hero p { color: #747d8c; font-size: 15px; margin: 5px 0 0 0; }
+        [data-theme="dark"] .hero p { color: #ced6e0; }
+
+        /* --- Poki Izgarası --- */
         .grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
             gap: 15px; 
-            padding: 30px; 
+            padding: 20px; 
             max-width: 1200px; 
             margin: 0 auto;
         }
 
-        /* Poki Tarzı Oyun Kutuları */
+        /* --- Kart Yapısı --- */
         .game-card { 
-            background: #353b48; 
+            background: var(--card-bg); 
             border-radius: 16px; 
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
             transition: all 0.25s ease;
             position: relative;
             cursor: pointer;
             border: 3px solid transparent;
         }
-        
-        /* Üzerine Gelince Poki Tarzı Büyüme ve Parlama */
         .game-card:hover { 
             transform: translateY(-5px) scale(1.03); 
-            border-color: #ff4757;
-            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.4);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.3);
         }
+        .game-card img { width: 100%; height: 150px; object-fit: cover; display: block; }
+        .game-info { padding: 10px; text-align: center; }
+        .game-info h3 { margin: 0; font-size: 13px; font-weight: 700; color: var(--card-text); whitespace: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Resimlerin Tam Oturması İçin Ayarlar */
-        .game-card img { 
-            width: 100%; 
-            height: 160px; 
-            object-fit: cover; 
-            display: block;
+        /* Favori Yıldızı */
+        .fav-star {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: 0.2s;
+            z-index: 10;
         }
+        .fav-star.active { color: #f1c40f; background: rgba(0,0,0,0.8); }
 
-        /* Oyun İsimleri */
-        .game-info {
-            padding: 12px;
-            text-align: center;
-            background: #2f3640;
+        /* --- Oyun Pop-up Modalı --- */
+        .game-modal {
+            display: none; position: fixed; z-index: 9999;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
         }
-        .game-info h3 { margin: 0; font-size: 14px; font-weight: 700; color: #f5f6fa; }
+        .modal-content {
+            position: relative; margin: 3vh auto;
+            width: 90%; height: 90vh; max-width: 1100px;
+            background-color: #1e2030; border-radius: 16px;
+            overflow: hidden; border: 3px solid var(--accent-color);
+        }
+        .close-btn {
+            position: absolute; top: 5px; right: 15px;
+            color: #fff; font-size: 40px; font-weight: bold;
+            cursor: pointer; z-index: 10002;
+        }
+        .close-btn:hover { color: var(--accent-color); }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        /* Tıklama Linki */
-        .game-link { text-decoration: none; color: inherit; }
+        /* Mobil Uyumluluk İnce Ayarı */
+        @media (max-width: 600px) {
+            header { flex-direction: column; gap: 10px; text-align: center; }
+            .search-container { width: 100%; }
+            .modal-content { width: 98%; height: 95vh; margin: 1vh auto; }
+        }
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
-    <!-- Üst Menü -->
+    <!-- Üst Kontrol Paneli -->
     <header>
-        <h1>DOĞA'NIN OYUN DÜNYASI</h1>
-        <div class="nav-links">
-            <a href="#">Aksiyon</a>
-            <a href="#">Araba</a>
-            <a href="#">Macera</a>
-            <a href="#">Bulmaca</a>
+        <h1>SELİM'İN OYUN DÜNYASI</h1>
+        <div class="search-container">
+            <input type="text" id="searchBar" onkeyup="filterGames()" placeholder="Oyun ara...">
+        </div>
+        <div class="controls">
+            <button class="btn" onclick="toggleTheme()">🌓 Mod</button>
         </div>
     </header>
 
-    <!-- Tanıtım -->
     <div class="hero">
-        <h2>🎮 Eğlenceye Hemen Başla!</h2>
-        <p>İndirme yapmadan, tamamen ücretsiz tarayıcı oyunlarının tadını çıkar.</p>
+        <h2>🎮 Premium Oyun Deneyimi</h2>
+        <p>İndirme yok, kasmayan, tamamen entegre en gelişmiş Poki altyapısı.</p>
     </div>
 
-    <!-- Oyun Alanı -->
-    <div class="grid">
-
-        <!-- Oyun 1: Moto X3M -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card">
-                <img src="https://gamedistribution.com" alt="Moto X3M">
-                <div class="game-info">
-                    <h3>Moto X3M Party</h3>
-                </div>
-            </div>
-        </a>
-
-        <!-- Oyun 2: Subway Surfers Alternatifi -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card">
-                <img src="https://gamedistribution.com" alt="Skater Rush">
-                <div class="game-info">
-                    <h3>Skater Rush</h3>
-                </div>
-            </div>
-        </a>
-
-        <!-- Oyun 3: Slither.io Benzeri Yılan Oyunu -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card">
-                <img src="https://gamedistribution.com" alt="Happy Snakes">
-                <div class="game-info">
-                    <h3>Happy Snakes</h3>
-                </div>
-            </div>
-        </a>
-
-        <!-- Oyun 4: Hız Tutkunları İçin Yarış -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card">
-                <img src="https://gamedistribution.com" alt="Cyber Cars Racing">
-                <div class="game-info">
-                    <h3>Cyber Punk Racing</h3>
-                </div>
-            </div>
-        </a>
-
-    </div>
-
-</body>
-</html>
-        <!-- 1. Moto X3M Pool Party -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Moto X3M Pool Party"><div class="game-info"><h3>Moto X3M Pool</h3></div></div>
-        </a>
-        <!-- 2. Skater Rush -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Skater Rush"><div class="game-info"><h3>Skater Rush</h3></div></div>
-        </a>
-        <!-- 3. Happy Snakes -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Happy Snakes"><div class="game-info"><h3>Happy Snakes</h3></div></div>
-        </a>
-        <!-- 4. Cyber Cars Punk Racing -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Cyber Cars Racing"><div class="game-info"><h3>Cyber Punk Racing</h3></div></div>
-        </a>
-        <!-- 5. Soccer Orbit -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Soccer Orbit"><div class="game-info"><h3>Soccer Orbit</h3></div></div>
-        </a>
-        <!-- 6. Penalty Challenge Multiplayer -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Penalty Challenge"><div class="game-info"><h3>Penalty Challenge</h3></div></div>
-        </a>
-        <!-- 7. Madalin Stunt Cars 2 -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Madalin Stunt Cars 2"><div class="game-info"><h3>Madalin Stunt 2</h3></div></div>
-        </a>
-        <!-- 8. Bubble Shooter Pro -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Bubble Shooter Pro"><div class="game-info"><h3>Bubble Shooter Pro</h3></div></div>
-        </a>
-        <!-- 9. Ludo Hero -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Ludo Hero"><div class="game-info"><h3>Ludo Hero</h3></div></div>
-        </a>
-        <!-- 10. Fireboy and Watergirl 1 -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Fireboy & Watergirl 1"><div class="game-info"><h3>Ateş ve Su 1</h3></div></div>
-        </a>
-        <!-- 11. Stickman Hook Alternatifi -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Stickman Swing"><div class="game-info"><h3>Stickman Swing</h3></div></div>
-        </a>
-        <!-- 12. Drift Cup Racing -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Drift Cup Racing"><div class="game-info"><h3>Drift Cup Racing</h3></div></div>
-        </a>
-        <!-- 13. Block Champ -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Block Champ"><div class="game-info"><h3>Block Champ</h3></div></div>
-        </a>
-        <!-- 14. Real Garages: Drift Car -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Real Garages Drift"><div class="game-info"><h3>Real Drift Car</h3></div></div>
-        </a>
-        <!-- 15. Trackmania Blitz Alternatifi -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Mini Race Rush"><div class="game-info"><h3>Mini Race Rush</h3></div></div>
-        </a>
-        <!-- 16. Mahjong Connect -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Mahjong Connect"><div class="game-info"><h3>Mahjong Connect</h3></div></div>
-        </a>
-        <!-- 17. Traffic Tom -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Traffic Tom"><div class="game-info"><h3>Traffic Tom</h3></div></div>
-        </a>
-        <!-- 18. Knife Hit Online -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Knife Dash"><div class="game-info"><h3>Knife Dash</h3></div></div>
-        </a>
-        <!-- 19. Tiles Hop Alternatifi -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Hop Ball"><div class="game-info"><h3>Hop Ball</h3></div></div>
-        </a>
-        <!-- 20. 8 Ball Billiards Classic -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="8 Ball Billiards"><div class="game-info"><h3>8 Ball Billiards</h3></div></div>
-        </a>
-        <!-- 21. Temple Run Alternatifi -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Tomb Runner"><div class="game-info"><h3>Tomb Runner</h3></div></div>
-        </a>
-        <!-- 22. Moto X3M Spooky Land -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Moto X3M Spooky"><div class="game-info"><h3>Moto X3M Spooky</h3></div></div>
-        </a>
-        <!-- 23. Solitaire Klondike Classic -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Solitaire Klondike"><div class="game-info"><h3>Solitaire Classic</h3></div></div>
-        </a>
-        <!-- 24. Table Tennis Pro -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Table Tennis"><div class="game-info"><h3>Table Tennis</h3></div></div>
-        </a>
-        <!-- 25. Foot Chinko -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="Foot Chinko"><div class="game-info"><h3>Foot Chinko</h3></div></div>
-        </a>
-        <!-- 26. City Car Stunt -->
-        <a href="https://gamedistribution.com" target="_blank" class="game-link">
-            <div class="game-card"><img src="https://gamedistribution.com" alt="City Car Stunt"><div class="game-info"><h3>City Car Stunt</h3></div></div>
-        </a>
-        <!-- 27. Jewel Academy -->
+    <!-- Oyun Kataloğu -->
+    <div class="grid" id="gameGrid">
+        <div class="game-card" data-name="moto x3m pool party" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g1')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Moto X3M Pool</h3></div></div>
+        <div class="game-card" data-name="skater rush" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g2')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Skater Rush</h3></div></div>
+        <div class="game-card" data-name="happy snakes" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g3')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Happy Snakes</h3></div></div>
+        <div class="game-card" data-name="cyber cars punk racing" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g4')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Cyber Punk Racing</h3></div></div>
+        <div class="game-card" data-name="soccer orbit" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g5')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Soccer Orbit</h3></div></div>
+        <div class="game-card" data-name="penalty challenge multiplayer" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g6')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Penalty Challenge</h3></div></div>
+        <div class="game-card" data-name="madalin stunt cars 2" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g7')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Madalin Stunt 2</h3></div></div>
+        <div class="game-card" data-name="bubble shooter pro" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g8')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Bubble Shooter Pro</h3></div></div>
+        <div class="game-card" data-name="ludo hero" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g9')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Ludo Hero</h3></div></div>
+        <div class="game-card" data-name="fireboy and watergirl 1 ateþ ve su" onclick="openGame('https://gamedistribution.com')"><span class="fav-star" onclick="toggleFav(event, 'g10')">★</span><img src="https://gamedistribution.com"> <div class="game-info"><h3>Ateş ve Su 1</h3></div></div>
